@@ -285,7 +285,7 @@ svg {
 }
 .btn--sm {
     font-size: 13px;
-    padding: 8px 16px;
+    padding: 8px 11px;
 }
 .btn--lg {
     font-size: 16px;
@@ -700,7 +700,7 @@ svg {
         0 24px 120px rgba(0, 0, 0, 0.6);
 }
 .hero__eyebrow {
-    color: var(--paper);
+    color: #e6b8b0;
 }
 .hero__title {
     color: var(--paper);
@@ -1196,7 +1196,8 @@ svg {
 }
 @media (min-width: 860px) {
     .wine-club__inner {
-        grid-template-columns: 1.15fr 1fr;
+        grid-template-columns: 1.1fr 1fr;
+        align-items: stretch;
     }
 }
 .wine-club__eyebrow {
@@ -1271,6 +1272,48 @@ svg {
     align-items: center;
     gap: 8px;
 }
+/* Wine club visual (image + card overlay) */
+.wine-club__visual {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+@media (max-width: 859px) {
+    .wine-club__visual {
+        min-height: 440px;
+    }
+}
+.wine-club__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+.wine-club__img-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(160deg, rgba(20, 12, 8, 0.62) 0%, rgba(20, 12, 8, 0.78) 100%);
+    z-index: 1;
+}
+.wine-club__card-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 48px 40px;
+}
+@media (max-width: 539px) {
+    .wine-club__card-wrap {
+        padding: 36px 24px;
+    }
+}
+
 .membership-card {
     position: relative;
     background: linear-gradient(170deg, #2e251d 0%, #1b1511 100%);
@@ -1364,8 +1407,8 @@ svg {
 }
 .wine-club__stamp {
     position: absolute;
-    bottom: -28px;
-    left: -28px;
+    bottom: 12px;
+    right: 28px;
     width: 124px;
     height: 124px;
     border-radius: 999px;
