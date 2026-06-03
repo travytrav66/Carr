@@ -150,6 +150,107 @@
     }
 
     /* ------------------------------------------------------------------ */
+    /* 7. Entrance animations                                             */
+    /* ------------------------------------------------------------------ */
+    function initAnimations() {
+        // Skip if user prefers reduced motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        // --- Hero: trigger immediately on load ---
+        var hero = document.querySelector('[data-section="hero"]');
+        if (hero) {
+            requestAnimationFrame(function () {
+                hero.classList.add('hero-loaded');
+            });
+        }
+
+        // --- Utility: mark an element as reveal target ---
+        function makeReveal(el, cls, delay) {
+            el.classList.add(cls);
+            if (delay) el.style.setProperty('--reveal-delay', delay);
+        }
+
+        // --- Section heads (eyebrow → title → rule → intro) ---
+        document.querySelectorAll('.section-head').forEach(function (head) {
+            var eyebrow = head.querySelector('.section-head__eyebrow');
+            var title   = head.querySelector('.section-head__title');
+            var isCenter = head.classList.contains('section-head--center');
+            var ruleClass = isCenter ? 'reveal-rule-center' : 'reveal-rule';
+            var rule    = head.querySelector('.section-head__rule');
+            var intro   = head.querySelector('.section-head__intro');
+
+            if (eyebrow) makeReveal(eyebrow, 'reveal', 0);
+            if (title)   makeReveal(title,   'reveal', 100);
+            if (rule)    makeReveal(rule,     ruleClass, 200);
+            if (intro)   makeReveal(intro,    'reveal', 300);
+        });
+
+        // --- Wine cards: staggered ---
+        document.querySelectorAll('.wine-card').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 90);
+        });
+
+        // --- Location cards: staggered ---
+        document.querySelectorAll('.location-card').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 120);
+        });
+
+        // --- Event cards: staggered ---
+        document.querySelectorAll('.event-card').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 80);
+        });
+
+        // --- Featured wines header "all link" ---
+        document.querySelectorAll('.featured-wines__all-link, .upcoming-events .featured-wines__all-link').forEach(function (el) {
+            makeReveal(el, 'reveal-fade', 350);
+        });
+
+        // --- Wine club content blocks ---
+        document.querySelectorAll('.wine-club__inner > div').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 150);
+        });
+
+        // --- Pillars ---
+        document.querySelectorAll('.pillar').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 120);
+        });
+
+        // --- CTA cards ---
+        document.querySelectorAll('.cta-card').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 100);
+        });
+        document.querySelectorAll('.final-cta__eyebrow, .final-cta__title, .final-cta__rule, .final-cta__lead').forEach(function (el, i) {
+            var cls = el.classList.contains('final-cta__rule') ? 'reveal-rule-center' : 'reveal';
+            makeReveal(el, cls, i * 100);
+        });
+
+        // --- Private events section ---
+        var privImg     = document.querySelector('.private-events__img');
+        var privContent = document.querySelector('.private-events__content');
+        if (privImg)     makeReveal(privImg,     'reveal', 0);
+        if (privContent) makeReveal(privContent, 'reveal', 150);
+
+        // --- Footer grid ---
+        document.querySelectorAll('.site-footer__grid > *').forEach(function (el, i) {
+            makeReveal(el, 'reveal', i * 80);
+        });
+
+        // --- IntersectionObserver: fire .is-visible when element enters viewport ---
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-fade, .reveal-left, .reveal-rule, .reveal-rule-center').forEach(function (el) {
+            observer.observe(el);
+        });
+    }
+
+    /* ------------------------------------------------------------------ */
     /* Init                                                                */
     /* ------------------------------------------------------------------ */
     function init() {
@@ -159,6 +260,7 @@
         initCartCount();
         initSmoothScroll();
         initParallax();
+        initAnimations();
     }
 
     if (document.readyState === 'loading') {

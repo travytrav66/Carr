@@ -691,6 +691,7 @@ svg {
 .hero__content {
     position: relative;
     z-index: 2;
+    padding-top: 160px;
     padding-bottom: 56px;
     width: 100%;
     text-shadow:
@@ -725,6 +726,15 @@ svg {
     gap: 14px;
     margin-top: 36px;
     flex-wrap: wrap;
+}
+@media (max-width: 539px) {
+    .hero__ctas {
+        flex-direction: column;
+    }
+    .hero__ctas .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 .hero__meta {
     margin-top: 56px;
@@ -773,8 +783,13 @@ svg {
 }
 .featured-wines__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 24px;
+}
+@media (min-width: 540px) {
+    .featured-wines__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 @media (min-width: 960px) {
     .featured-wines__grid {
@@ -1238,6 +1253,15 @@ svg {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+}
+@media (max-width: 539px) {
+    .wine-club__ctas {
+        flex-direction: column;
+    }
+    .wine-club__ctas .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 .wine-club__disclaimer {
     margin-top: 16px;
@@ -1791,6 +1815,15 @@ svg {
     gap: 12px;
     flex-wrap: wrap;
 }
+@media (max-width: 539px) {
+    .private-events__ctas {
+        flex-direction: column;
+    }
+    .private-events__ctas .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
 
 /* ============================================================
    FINAL CTA
@@ -1863,6 +1896,12 @@ svg {
     color: rgba(246, 240, 228, 0.7);
     font-size: 14.5px;
     flex: 1;
+}
+@media (max-width: 539px) {
+    .cta-card .btn {
+        width: 100% !important;
+        justify-content: center;
+    }
 }
 .final-cta__contact {
     margin-top: 56px;
@@ -1945,6 +1984,130 @@ svg {
 }
 .site-footer__legal a:hover {
     color: var(--carr-red);
+}
+
+/* ============================================================
+   ENTRANCE ANIMATIONS
+   ============================================================ */
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: no-preference) {
+    /* --- Keyframes --- */
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(28px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes slideLeft {
+        from {
+            opacity: 0;
+            transform: translateX(32px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes growRule {
+        from {
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        to {
+            opacity: 1;
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+    }
+    @keyframes growRuleCenter {
+        from {
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: center;
+        }
+        to {
+            opacity: 1;
+            transform: scaleX(1);
+            transform-origin: center;
+        }
+    }
+
+    /* --- Reveal utility: hidden until .is-visible is added --- */
+    .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    .reveal.is-visible {
+        animation: fadeUp 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        animation-delay: calc(var(--reveal-delay, 0) * 1ms);
+    }
+    .reveal-fade {
+        opacity: 0;
+    }
+    .reveal-fade.is-visible {
+        animation: fadeIn 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        animation-delay: calc(var(--reveal-delay, 0) * 1ms);
+    }
+    .reveal-left {
+        opacity: 0;
+        transform: translateX(32px);
+    }
+    .reveal-left.is-visible {
+        animation: slideLeft 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        animation-delay: calc(var(--reveal-delay, 0) * 1ms);
+    }
+    .reveal-rule {
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+    .reveal-rule.is-visible {
+        animation: growRule 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        animation-delay: calc(var(--reveal-delay, 0) * 1ms);
+    }
+    .reveal-rule-center {
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: center;
+    }
+    .reveal-rule-center.is-visible {
+        animation: growRuleCenter 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        animation-delay: calc(var(--reveal-delay, 0) * 1ms);
+    }
+
+    /* --- Hero: animate on load (no observer needed) --- */
+    .hero-loaded .hero__eyebrow {
+        animation: fadeUp 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s both;
+    }
+    .hero-loaded .hero__title {
+        animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s both;
+    }
+    .hero-loaded .hero__rule {
+        animation: growRule 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.45s both;
+    }
+    .hero-loaded .hero__lead {
+        animation: fadeUp 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) 0.55s both;
+    }
+    .hero-loaded .hero__ctas {
+        animation: fadeUp 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) 0.7s both;
+    }
+    .hero-loaded .hero__meta {
+        animation: fadeUp 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.85s both;
+    }
 }
 
 /* ============================================================
