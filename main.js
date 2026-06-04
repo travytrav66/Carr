@@ -251,9 +251,38 @@
     }
 
     /* ------------------------------------------------------------------ */
+    /* 8. Page loader                                                      */
+    /* ------------------------------------------------------------------ */
+    function initPageLoader() {
+        var loader = document.getElementById('page-loader');
+        if (!loader) return;
+
+        function hide() {
+            loader.classList.add('is-hidden');
+        }
+
+        // Hide once everything (images etc.) has loaded, with a brief min-display
+        var minDelay = 600; // ms — ensures the animation is seen
+        var startTime = Date.now();
+
+        function done() {
+            var elapsed = Date.now() - startTime;
+            var remaining = Math.max(0, minDelay - elapsed);
+            setTimeout(hide, remaining);
+        }
+
+        if (document.readyState === 'complete') {
+            done();
+        } else {
+            window.addEventListener('load', done);
+        }
+    }
+
+    /* ------------------------------------------------------------------ */
     /* Init                                                                */
     /* ------------------------------------------------------------------ */
     function init() {
+        initPageLoader();
         initLucide();
         initStickyNav();
         initMobileNav();
